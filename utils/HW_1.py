@@ -14,8 +14,8 @@ class Category:
         self.products = products
 
         #Здесь стоит обращаться к атрибутам класса категории и изменять их значения:
-        #Category.category_count += 1
-        #Category.product_count += len(set(self.products)) - к множеству приводим для того,
+        Category.category_count += 1
+        Category.product_count += len(set(self.products)) #- к множеству приводим для того,
         # чтобы добиться уникальности.
 
 
