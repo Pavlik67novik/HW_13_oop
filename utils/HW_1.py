@@ -1,7 +1,10 @@
 class Category:
+    """   Класс для категорий товара   """
     name: str #Название
     description: str #Описние
     products: str # товары
+    category_count = 0
+    product_count = 0
 
 
 
@@ -9,8 +12,12 @@ class Category:
         self.name = name
         self.description = description
         self.products = products
-        self.quantity_category = quantity_category # Кол-во категорий
-        self.unique_product = unique_product  # Кол-во уникальных продуктов
+
+        #Здесь стоит обращаться к атрибутам класса категории и изменять их значения:
+        #Category.category_count += 1
+        #Category.product_count += len(set(self.products)) - к множеству приводим для того,
+        # чтобы добиться уникальности.
+
 
 
 class Product:
