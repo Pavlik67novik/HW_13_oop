@@ -1,6 +1,6 @@
 import json
-from HW_1 import Category
-from HW_1 import Product
+from HW1 import Category
+from HW1 import Product
 
 def get_data():
     """ Читаем файл данных"""

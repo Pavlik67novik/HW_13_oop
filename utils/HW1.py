@@ -33,5 +33,5 @@ class Product:
         self.quantity_in_stock = quantity_in_stock
 
 
-if __name__ == "__main__":
-    r1 = Category('iphone12', "Cool phone", "Дорогие телефоны")
+#if __name__ == "__main__":
+    #r1 = Category('iphone12', "Cool phone", "Дорогие телефоны")
