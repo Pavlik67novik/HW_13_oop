@@ -52,6 +52,17 @@ class Product:
     def creat_poducts(cls, name, description, price, quantity):
         return cls(name, description, price, quantity)
 
+    @property
+    def price(self):
+        return self.__price
+
+    @price.setter
+    def price(self, new_price):
+        if new_price <= 0:
+            print('Цена введена некорректная')
+        else:
+            self.__price = new_price
+
 
 #if __name__ == "__main__":
     #r1 = Category('iphone12', "Cool phone", "Дорогие телефоны")
