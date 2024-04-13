@@ -31,7 +31,7 @@ class Category:
     def list_product(self):
         output = ''
         for product in self.__products:
-            output += f'{product.name},{product.price} руб. Остаток {product.count}\n'
+            output += f'{product.name},{product.price} руб. Остаток {product.count} шт.\n'
         return output
 
 
@@ -49,7 +49,7 @@ class Product:
 
 
     @classmethod
-    def creat_poducts(cls, name, description, price, quantity):
+    def creat_poducts(cls, **kwargs):
         return cls(name, description, price, quantity)
 
     @property
