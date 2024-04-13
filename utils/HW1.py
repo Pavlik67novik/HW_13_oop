@@ -35,6 +35,15 @@ class Category:
         return output
 
 
+    def __str__(self):
+        return f'{self.name}, количество продуктов: {len(self)} шт.'
+
+    def __len__(self):
+        quantity = 0
+        for product in self.__products:
+            quantity += product.quantity
+        return quantity
+
 class Product:
     name: str
     description: str
@@ -62,6 +71,9 @@ class Product:
             print('Цена введена некорректная')
         else:
             self.__price = new_price
+
+    def __str__(self):
+        return f'{self.name}, {self.__price} руб. Остаток: {self.quantity_in_stock}'
 
 
 #if __name__ == "__main__":
