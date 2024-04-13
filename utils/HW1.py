@@ -59,7 +59,8 @@ class Product:
 
     @classmethod
     def creat_poducts(cls, **kwargs):
-        return cls(name, description, price, quantity)
+        return cls(name, description, price, quantity_in_stock)
+
 
     @property
     def price(self):
@@ -76,5 +77,13 @@ class Product:
         return f'{self.name}, {self.__price} руб. Остаток: {self.quantity_in_stock}'
 
 
-#if __name__ == "__main__":
-    #r1 = Category('iphone12', "Cool phone", "Дорогие телефоны")
+
+    def __add__(self, other):
+        """Метод сложения сумм и умножения на кол-во на складе"""
+        return (self.price * self.quantity_in_stock) + (other.price * other.quantity_in_stock)
+
+# if __name__ == "__main__":
+#     #t1 = {'name' : 'iphone12', 'description' : "smartphone", 'price' : 58400, 'quantity_in_stock' : 15}
+#     t1 = Product('iphone12', "smartphone", 58400, 15)
+#     #prod = creat_poducts(t1)
+#     print(t1)
