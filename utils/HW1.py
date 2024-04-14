@@ -82,6 +82,29 @@ class Product:
         """Метод сложения сумм и умножения на кол-во на складе"""
         return (self.price * self.quantity_in_stock) + (other.price * other.quantity_in_stock)
 
+
+class Smartphone(Product):
+    """ Создаем класс смартфон наследуемый от Продукта"""
+
+    def __init__(self, efficiency, model, memory, colour, name, description, price, quantity):
+        super().__init__(name, description, price, quantity)
+        self.efficiency = efficiency
+        self.model = model
+        self.memory = memory
+        self.colour = colour
+
+
+class Lawn_grass:
+    """ Создаем класс трава_газон наследуемый от Продукта"""
+
+    def __init__(self, country, period, colour, name, description, price, quantity):
+        super().__init__(name, description, price, quantity)
+        self.country = country
+        self.period = period
+        self.colour = colour
+
+
+
 # if __name__ == "__main__":
 #     #t1 = {'name' : 'iphone12', 'description' : "smartphone", 'price' : 58400, 'quantity_in_stock' : 15}
 #     t1 = Product('iphone12', "smartphone", 58400, 15)
