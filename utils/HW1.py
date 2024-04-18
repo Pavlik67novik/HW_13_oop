@@ -16,9 +16,11 @@ class Category:
         Category.product_count += len(set(self.products))
 
 
-    def add_products(self, value):
-        self.__products.append(value)
-        Category.product_count += 1
+    def add_products(self, product):
+        if isinstance(product, Product):
+            self.products.append(product)
+        #self.__products.append(value)
+        #Category.product_count += 1
 
 
 
@@ -80,7 +82,35 @@ class Product:
 
     def __add__(self, other):
         """Метод сложения сумм и умножения на кол-во на складе"""
-        return (self.price * self.quantity_in_stock) + (other.price * other.quantity_in_stock)
+        if type(self) is type(other):
+            return (self.price * self.quantity_in_stock) + (other.price * other.quantity_in_stock)
+        raise TypeError
+        # if isinstance(other, type(self)):
+        #     return (self.price * self.quantity_in_stock) + (other.price * other.quantity_in_stock)
+        # else:
+        #     raise TypeError
+
+class Smartphone(Product):
+    """ Создаем класс смартфон наследуемый от Продукта"""
+
+    def __init__(self, efficiency, model, memory, colour, name, description, price, quantity):
+        super().__init__(name, description, price, quantity)
+        self.efficiency = efficiency
+        self.model = model
+        self.memory = memory
+        self.colour = colour
+
+
+class Lawn_grass:
+    """ Создаем класс трава_газон наследуемый от Продукта"""
+
+    def __init__(self, country, period, colour, name, description, price, quantity):
+        super().__init__(name, description, price, quantity)
+        self.country = country
+        self.period = period
+        self.colour = colour
+
+
 
 # if __name__ == "__main__":
 #     #t1 = {'name' : 'iphone12', 'description' : "smartphone", 'price' : 58400, 'quantity_in_stock' : 15}
