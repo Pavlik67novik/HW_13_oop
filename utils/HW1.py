@@ -82,6 +82,7 @@ class Product:
 
     def __add__(self, other):
         """Метод сложения сумм и умножения на кол-во на складе"""
+
         if type(self) is type(other):
             return (self.price * self.quantity_in_stock) + (other.price * other.quantity_in_stock)
         raise TypeError
@@ -89,6 +90,7 @@ class Product:
         #     return (self.price * self.quantity_in_stock) + (other.price * other.quantity_in_stock)
         # else:
         #     raise TypeError
+
 
 class Smartphone(Product):
     """ Создаем класс смартфон наследуемый от Продукта"""
