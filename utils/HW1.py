@@ -1,10 +1,20 @@
-class Category:
+from abc import ABC, abstractmethod
+
+
+class MixinRepr:
+
+    def __repr__(self):
+        return f'{self.__class__.__name__} ({self.__dict__.items()})'
+
+class Category(MixinRepr):
     """   Класс для категорий товара   """
+    # наследуем от абстрактного класса  MixinRepr
     name: str #Название
     description: str #Описние
     products: str # товары
     category_count = 0
     product_count = 0
+
 
 
 
@@ -14,7 +24,7 @@ class Category:
         self.__products = products
         Category.category_count += 1
         Category.product_count += len(set(self.products))
-
+        super().__repr__()
 
     def add_products(self, product):
         if isinstance(product, Product):
@@ -46,7 +56,8 @@ class Category:
             quantity += product.quantity
         return quantity
 
-class Product:
+class Product(MixinRepr):
+    #наследуем от абстрактного класса  MixinRepr
     name: str
     description: str
     price: float
@@ -57,6 +68,7 @@ class Product:
         self.description = description
         self.price = price
         self.quantity_in_stock = quantity_in_stock
+        super().__repr__()
 
 
     @classmethod
@@ -103,7 +115,7 @@ class Smartphone(Product):
         self.colour = colour
 
 
-class Lawn_grass:
+class Lawn_grass(Product):
     """ Создаем класс трава_газон наследуемый от Продукта"""
 
     def __init__(self, country, period, colour, name, description, price, quantity):
@@ -111,6 +123,23 @@ class Lawn_grass:
         self.country = country
         self.period = period
         self.colour = colour
+
+class Abstract(ABC):
+
+    @classmethod
+    @abstractmethod
+    def creat_product(cls):
+        pass
+
+    @property
+    @abstractmethod
+    def price(self):
+        pass
+
+    @price.setter
+    @abstractmethod
+    def price(self, new_price):
+        pass
 
 
 
