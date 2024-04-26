@@ -33,6 +33,18 @@ class Category(MixinRepr):
         #Category.product_count += 1
 
 
+    def average_price(self):
+        """метод, который подсчитывает средний ценник всех товаров """
+        average_price = []
+        for goods in self.__products:
+            try:
+                if goods.quantity == 0:
+                    raise ZeroDivisionError
+                average_price.append(goods.price)
+            except ZeroDivisionError:
+                return 0
+        return sum(average_price) / len(average_price)
+
 
     @property
     def products(self):
@@ -55,6 +67,11 @@ class Category(MixinRepr):
         for product in self.__products:
             quantity += product.quantity
         return quantity
+
+
+    def zero_quantity(self, quantity):
+        if quantity < 1:
+            raise ValueError
 
 class Product(MixinRepr, AbstractProduct):
     #наследуем от абстрактного класса  MixinRepr
