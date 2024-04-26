@@ -56,7 +56,7 @@ class Category(MixinRepr):
             quantity += product.quantity
         return quantity
 
-class Product(MixinRepr):
+class Product(MixinRepr, AbstractProduct):
     #наследуем от абстрактного класса  MixinRepr
     name: str
     description: str
@@ -124,7 +124,7 @@ class Lawn_grass(Product):
         self.period = period
         self.colour = colour
 
-class Abstract(ABC):
+class AbstractProduct(ABC):
 
     @classmethod
     @abstractmethod
