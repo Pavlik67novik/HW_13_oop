@@ -29,21 +29,28 @@ class Category(MixinRepr):
     def add_products(self, product):
         if isinstance(product, Product):
             self.products.append(product)
+
+        raise ValueError #
         #self.__products.append(value)
         #Category.product_count += 1
 
 
     def average_price(self):
-        """метод, который подсчитывает средний ценник всех товаров """
+        """Метод, который подсчитывает средний ценник всех товаров """
         average_price = []
         for goods in self.__products:
             try:
-                if goods.quantity == 0:
-                    raise ZeroDivisionError
-                average_price.append(goods.price)
+                total_price = sum(product.price for product in self.products)
+                average_price = total_price / len(self.products)
             except ZeroDivisionError:
                 return 0
-        return sum(average_price) / len(average_price)
+            return average_price
+        #         if goods.quantity == 0:
+        #             raise ZeroDivisionError
+        #         average_price.append(goods.price)
+        #     except ZeroDivisionError:
+        #         return 0
+        # return sum(average_price) / len(average_price)
 
 
     @property
