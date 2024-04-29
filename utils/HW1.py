@@ -29,12 +29,14 @@ class Category(MixinRepr):
     def add_products(self, product):
         if isinstance(product, Product):
             self.products.append(product)
+
+        raise ValueError #
         #self.__products.append(value)
         #Category.product_count += 1
 
 
     def average_price(self):
-        """метод, который подсчитывает средний ценник всех товаров """
+        """Метод, который подсчитывает средний ценник всех товаров """
         average_price = []
         for goods in self.__products:
             try:
