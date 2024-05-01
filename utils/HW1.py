@@ -6,6 +6,12 @@ class MixinRepr:
     def __repr__(self):
         return f'{self.__class__.__name__} ({self.__dict__.items()})'
 
+class ZeroQuantityException(Exception):
+    """ вызов сообщения ошибки при кол-ве = 0 """
+    def __init__(self, message="Попытка добавить товар с нулевым количеством.") -> None:
+        self.message = message
+        super().__init__(self.message)
+
 class Category(MixinRepr):
     """   Класс для категорий товара   """
     # наследуем от абстрактного класса  MixinRepr
@@ -27,12 +33,8 @@ class Category(MixinRepr):
         super().__repr__()
 
     def add_products(self, product):
-        if isinstance(product, Product):
-            self.products.append(product)
-
-        raise ValueError #
-        #self.__products.append(value)
-        #Category.product_count += 1
+        self.__products.append(product)
+        Category.product_count += 1
 
 
     def average_price(self):
@@ -88,6 +90,8 @@ class Product(MixinRepr, AbstractProduct):
     quantity_in_stock: int
 
     def __init__(self, name, description, price, quantity_in_stock):
+        if quantity_in_stock == 0:
+            raise ZeroQuantityException() #сразу на входных данных проверяем, и выводим в ошибку если Try
         self.name = name
         self.description = description
         self.price = price
@@ -126,6 +130,8 @@ class Product(MixinRepr, AbstractProduct):
         #     return (self.price * self.quantity_in_stock) + (other.price * other.quantity_in_stock)
         # else:
         #     raise TypeError
+
+
 
 
 class Smartphone(Product):
