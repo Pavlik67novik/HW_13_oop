@@ -6,6 +6,32 @@ class MixinRepr:
     def __repr__(self):
         return f'{self.__class__.__name__} ({self.__dict__.items()})'
 
+class ZeroQuantityException(Exception):
+    """ вызов сообщения ошибки при кол-ве = 0 """
+    def __init__(self, message="Попытка добавить товар с нулевым количеством.") -> None:
+        self.message = message
+        super().__init__(self.message)
+
+
+
+class AbstractProduct(ABC):
+
+    @classmethod
+    @abstractmethod
+    def creat_product(cls):
+        pass
+
+    @property
+    @abstractmethod
+    def price(self):
+        pass
+
+    @price.setter
+    @abstractmethod
+    def price(self, new_price):
+        pass
+
+
 class Category(MixinRepr):
     """   Класс для категорий товара   """
     # наследуем от абстрактного класса  MixinRepr
@@ -16,8 +42,6 @@ class Category(MixinRepr):
     product_count = 0
 
 
-
-
     def __init__(self, name, description, products):
         self.name = name
         self.description = description
@@ -26,13 +50,12 @@ class Category(MixinRepr):
         Category.product_count += len(set(self.products))
         super().__repr__()
 
-    def add_products(self, product):
-        if isinstance(product, Product):
-            self.products.append(product)
-
-        raise ValueError #
-        #self.__products.append(value)
-        #Category.product_count += 1
+    def add_products(self, product, quantity_in_stock):
+        if quantity_in_stock > 0:
+            self.__products.append(product)
+            Category.product_count += 1
+        else:
+            raise ValueError("КОл-во должно быть больше  0")
 
 
     def average_price(self):
@@ -88,6 +111,8 @@ class Product(MixinRepr, AbstractProduct):
     quantity_in_stock: int
 
     def __init__(self, name, description, price, quantity_in_stock):
+        if quantity_in_stock == 0:
+            raise ZeroQuantityException() #сразу на входных данных проверяем, и выводим в ошибку если Try
         self.name = name
         self.description = description
         self.price = price
@@ -96,7 +121,7 @@ class Product(MixinRepr, AbstractProduct):
 
 
     @classmethod
-    def creat_poducts(cls, **kwargs):
+    def creat_product(cls, **kwargs):
         return cls(name, description, price, quantity_in_stock)
 
 
@@ -114,11 +139,8 @@ class Product(MixinRepr, AbstractProduct):
     def __str__(self):
         return f'{self.name}, {self.__price} руб. Остаток: {self.quantity_in_stock}'
 
-
-
     def __add__(self, other):
         """Метод сложения сумм и умножения на кол-во на складе"""
-
         if type(self) is type(other):
             return (self.price * self.quantity_in_stock) + (other.price * other.quantity_in_stock)
         raise TypeError
@@ -126,6 +148,8 @@ class Product(MixinRepr, AbstractProduct):
         #     return (self.price * self.quantity_in_stock) + (other.price * other.quantity_in_stock)
         # else:
         #     raise TypeError
+
+
 
 
 class Smartphone(Product):
@@ -148,27 +172,30 @@ class Lawn_grass(Product):
         self.period = period
         self.colour = colour
 
-class AbstractProduct(ABC):
 
-    @classmethod
-    @abstractmethod
-    def creat_product(cls):
-        pass
-
-    @property
-    @abstractmethod
-    def price(self):
-        pass
-
-    @price.setter
-    @abstractmethod
-    def price(self, new_price):
-        pass
 
 
 
 # if __name__ == "__main__":
 #     #t1 = {'name' : 'iphone12', 'description' : "smartphone", 'price' : 58400, 'quantity_in_stock' : 15}
-#     t1 = Product('iphone12', "smartphone", 58400, 15)
-#     #prod = creat_poducts(t1)
+#     t1 = Product('iphone12', "smartphone", 58400, 0)
+#     prod = creat_poducts(t1)
 #     print(t1)
+
+# t1 = Product('iphone12', "smartphone", 58400, 2)
+# # Создаем объект класса Category
+# category = Category('telefons', 'smarfon', t1)
+#
+# # Пытаемся добавить продукт с количеством товаров > 0
+# try:
+#     category.add_products("Product 1", 5)
+#     print("Product added successfully")
+# except ValueError as e:
+#     print(f"Error: {e}")
+#
+# # Пытаемся добавить продукт с количеством товаров = 0
+# try:
+#     category.add_products("Product 2", 0)
+#     print("Product added successfully")
+# except ValueError as e:
+#     print(f"Error: {e}")
